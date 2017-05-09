@@ -1,5 +1,8 @@
 <?php
 
+ob_start();
+session_start();
+
 /*
 $email = (string)@$_POST['email'];
 $email = (string)filter_input(INPUT_POST, 'email');
@@ -15,37 +18,41 @@ var_dump($input_data);
 
 $error_details = array();
 
-// •K{ƒ`ƒFƒbƒN
+// å¿…é ˆãƒã‚§ãƒƒã‚¯
 
 $must_params = array('email','body');
 foreach($must_params as $p){
     if ('' === $input_data[$p]){
-        // ƒGƒ‰[ˆ—
+        // ã‚¨ãƒ©ãƒ¼å‡¦ç†
         $error_detail["error_must_{$p}"] = true;
     }
 }
 
-// Œ^ƒ`ƒFƒbƒN: email
+// åž‹ãƒã‚§ãƒƒã‚¯: email
 
-// XXX RFC ”ñ
+// XXX RFC éž
 if (false === filter_var($input_data['email'], FILTER_VALIDATE_EMAIL)) {
-    //ƒGƒ‰[ˆ—
+    //ã‚¨ãƒ©ãƒ¼å‡¦ç†
    $error_detail["error_format_email"] = true;
  }
- // Œ^ƒ`ƒFƒbƒNF“ú•t
+ // åž‹ãƒã‚§ãƒƒã‚¯ï¼šæ—¥ä»˜
 if ('' !== $input_data['birthday']) {
     if (false === strtotime($input_data['birthday'])) {
-        // ƒGƒ‰[ˆ—
+        // ã‚¨ãƒ©ãƒ¼å‡¦ç†
         $error_detail["error_format_birthday"] = true;
     }
 }
 
- // ƒGƒ‰[”»’è
+ // ã‚¨ãƒ©ãƒ¼åˆ¤å®š
 
 if (array() !== $error_detail){
+  $_SESSION['buffer']['error_detail']=$error_detail;
 
-var_dump($error_detail);
-   echo 'ƒGƒ‰[‚ª‚ ‚Á‚½‚ç‚µ‚¢';
-   exit;
+$_SESSION['buffer']['input']=$input_data;
+
+// var_dump($error_detail);
+   // echo 'ã‚¨ãƒ©ãƒ¼ãŒã‚ã£ãŸã‚‰ã—ã„';
+ header('Location:./inquiry.php');   
+exit;
  }
-echo 'OK ‚Å‚µ‚½II';
+echo 'ãƒ‡ãƒ¼ã‚¿ã®validation OK ã§ã—ãŸï¼ï¼';

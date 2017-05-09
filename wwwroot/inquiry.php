@@ -1,23 +1,36 @@
 <?php
+// inquiry.php
+//
 ob_start();
 session_start();
 
-
+// 確認
 //var_dump($_SESSION);
-if (true === isset ($_SESSION['buffer']['error_detail'])){
- $error_detail=$_SESSION['buffer']['error_detail'];
+
+// 入力内容を取得
+//$input = $_SESSION['buffer']['input'] ?? []; // PHP 7.0以降ならこっち
+if (true === isset($_SESSION['buffer']['input'])) {
+    $input = $_SESSION['buffer']['input'];
 } else {
-
-   $error_detail = array();
+    //$input = []; // PHP 5.4以降ならこっちでもよい
+    $input = array();
 }
 
-function h($s){
- return htmlspecialchars($s, ENT_QUOTES);
+// エラー内容を取得
+//$error_detail = $_SESSION['buffer']['error_detail'] ?? [];
+if (true === isset($_SESSION['buffer']['error_detail'])) {
+    $error_detail = $_SESSION['buffer']['error_detail'];
+} else {
+    //$error_detail = []; // PHP 5.4以降ならこっちでもよい
+    $error_detail = array();
 }
 
+// XSS対策用関数
+function h($s) {
+    return htmlspecialchars($s, ENT_QUOTES);
+}
 
 ?>
-
 <html>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <body>
