@@ -2,31 +2,32 @@
 // dbh.php
 require_once('db_config.php');
 
-// DB�p�֐�
+// DB用関数
 // ----------------------------
 function get_dbh() {
-    // �ݒ�l�̎擾
+    // 設定値の取得
     $db_config = db_config();
-    // �f�[�^�̐ݒ�
+    // データの設定
     $user = $db_config['user'];
     $pass = $db_config['pass'];
     $dsn = "mysql:dbname={$db_config['database']};host={$db_config['host']};charset={$db_config['charset']}";
 
-    // �ڑ��I�v�V�����̐ݒ�
+    // 接続オプションの設定
     $opt = array (
         PDO::ATTR_EMULATE_PREPARES => false,
     );
-    // �u�����֎~�v���\�Ȃ�t�������Ă���
+    // 「複文禁止」が可能なら付け足しておく
     if (defined('PDO::MYSQL_ATTR_MULTI_STATEMENTS')) {
         $opt[PDO::MYSQL_ATTR_MULTI_STATEMENTS] = false;
     }
 
-    // �ڑ�
+    // 接続
     try {
         $dbh = new PDO($dsn, $user, $pass, $opt);
     } catch (PDOException $e) {
-        // XXX �{���͂����������J�ȃG���[�y�[�W���o�͂���
-        echo '�V�X�e���ŃG���[���N���܂���';
+        // XXX 本当はもう少し丁寧なエラーページを出力する
+        echo 'システムでエラーが起きました';
+var_dump($e);
         exit;
     }
     //

@@ -8,7 +8,7 @@ function db_config(){
      'user' => 'tech',
      'database' => 'tech',
      'pass' => 'tech',
-     'host' => '',
+     'host' => 'localhost',
      'charset' => 'utf8mb4',
 );
 
