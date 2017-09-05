@@ -1,8 +1,7 @@
 <?php
 // inquiry_fin.php
 //
-ob_start();
-session_start();
+require_once( __DIR__ . '/init.php');
 
 //
 require_once( __DIR__ . '/dbh.php');
@@ -83,13 +82,13 @@ if (array() !== $error_detail) {
 // 入力された情報をDBにinsert
 // DBハンドルを取得
 $dbh = get_dbh();
-var_dump($dbh);
+//var_dump($dbh);
 
 // SQL文(準備された文：プリペアドステートメント)を作成
 $sql = 'INSERT INTO inquirys(email, inquiry_body, name, birthday)
   VALUES(:email, :inquiry_body, :name, :birthday);';
 $pre = $dbh->prepare($sql);
-var_dump($pre);
+//var_dump($pre);
 // プレースホルダにデータをバインド
 $pre->bindValue(':email', $input_data['email']);
 $pre->bindValue(':inquiry_body', $input_data['body']);
@@ -97,7 +96,7 @@ $pre->bindValue(':birthday', $input_data['birthday']);
 $pre->bindValue(':name', $input_data['name']);
 // SQLを実行
 $r = $pre->execute();
-var_dump($r);
+//var_dump($r);
 if (false === $r) {
     // XXX 本当はもうちょっと丁寧にいろいろとやる
     echo 'すみませんデータが取得できませんでした';
@@ -105,4 +104,7 @@ if (false === $r) {
 }
 
 // 「ありがとう」Pageの出力
+// テンプレートを指定して出力
+error_reporting(E_ALL & ~E_NOTICE);
+$smarty_obj->display('inquiry_fin.tpl');
 

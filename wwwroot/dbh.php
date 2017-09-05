@@ -5,6 +5,12 @@ require_once('db_config.php');
 // DB用関数
 // ----------------------------
 function get_dbh() {
+    // 「二重接続」を防ぐためのロジック
+    static $dbh = NULL;
+    if (NULL !== $dbh) {
+        return $dbh;
+    }
+
     // 設定値の取得
     $db_config = db_config();
     // データの設定
@@ -27,7 +33,6 @@ function get_dbh() {
     } catch (PDOException $e) {
         // XXX 本当はもう少し丁寧なエラーページを出力する
         echo 'システムでエラーが起きました';
-var_dump($e);
         exit;
     }
     //

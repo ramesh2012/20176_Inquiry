@@ -1,18 +1,14 @@
 <?php
-// test header php
-
-//ƒwƒbƒ_‚ðo—Í‚·‚é‚Ì‚Åƒoƒbƒtƒ@ƒŠƒ“ƒO
+// header_test.php
+// ãƒ˜ãƒƒãƒ€ã‚’å‡ºåŠ›ã™ã‚‹ã®ã§ãƒãƒƒãƒ•ã‚¡ãƒªãƒ³ã‚°
 ob_start();
 
-
-// ­‚µ‘Ò‚Â
+// å°‘ã—å¾…ã¤
 sleep(3);
-//—]Œv‚Èo—Í
 
-echo'test';
+// ä½™è¨ˆãªå‡ºåŠ›
+echo 'test';
 
+// ç§»å‹•ã•ã›ã‚‹
+header('Location: http://google.com');
 
-//ˆÚ“®‚³‚¹‚é
-header('Location:http://google.com');
-
-?>

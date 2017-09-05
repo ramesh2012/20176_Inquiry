@@ -1,1 +1,1 @@
-Inquries Test
+Inquiry test
